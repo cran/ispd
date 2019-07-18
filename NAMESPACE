@@ -1,0 +1,5 @@
+importFrom("ibd","ibd")
+importFrom("ibd","is.wholenumber")
+importFrom("utils","write.table")
+importFrom("stats","pf")
+export(ispd,aov.ispd)
