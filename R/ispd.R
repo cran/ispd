@@ -287,15 +287,15 @@ aov.ispd.imcs = function(obs, block, mp, sp, y)
   C_MS=R %x% diag(s-1) - N4_curl%*%t(N4_curl)/s
   mpspSS=t(Q_MS)%*%solve(C_MS)%*%Q_MS - spSS
   resSS=t(y)%*%y-t(yBM.)%*%yBM./s-mpspSS-spSS
-  mpspF=(mpspSS/((m-1)*(s-1)))/(resSS/(b*k1*s-b*m-m*s+m))
-  p.value.mpsp=pf(mpspF, df1=(m-1)*(s-1), df2=b*k1*s-b*m-m*s+m, ncp=0, lower.tail = FALSE)
-  spF=(spSS/(s-1))/(resSS/(b*k1*s-b*m-m*s+m))
-  p.value.sp=pf(spF, df1=(s-1), df2=b*k1*s-b*m-m*s+m, ncp=0, lower.tail = FALSE)
-  mpF=(mpSS/(m-1))/(blockmpSS/((b-1)*(m-1)))
-  p.value.mp=pf(mpF, df1=(m-1), df2=(b-1)*(m-1), ncp=0, lower.tail = FALSE)
-  blockF=(blockSS/(b-1))/(blockmpSS/((b-1)*(m-1)))
-  p.value.block=pf(blockF, df1=(b-1), df2=(b-1)*(m-1), ncp=0, lower.tail = FALSE)
-  df=c(b-1,m-1,(b-1)*(m-1),s-1,(m-1)*(s-1),b*k1*s-b*m-m*s+m,b*k1*s-1)
+  mpspF=(mpspSS/((m-1)*(s-1)))/(resSS/(b*k1*s-b*k1-m*s+m))
+  p.value.mpsp=pf(mpspF, df1=(m-1)*(s-1), df2=b*k1*s-b*k1-m*s+m, ncp=0, lower.tail = FALSE)
+  spF=(spSS/(s-1))/(resSS/(b*k1*s-b*k1-m*s+m))
+  p.value.sp=pf(spF, df1=(s-1), df2=b*k1*s-b*k1-m*s+m, ncp=0, lower.tail = FALSE)
+  mpF=(mpSS/(m-1))/(blockmpSS/(b*k1-b-m+1))
+  p.value.mp=pf(mpF, df1=(m-1), df2=b*k1-b-m+1, ncp=0, lower.tail = FALSE)
+  blockF=(blockSS/(b-1))/(blockmpSS/(b*k1-b-m+1))
+  p.value.block=pf(blockF, df1=(b-1), df2=b*k1-b-m+1, ncp=0, lower.tail = FALSE)
+  df=c(b-1,m-1,b*k1-b-m+1,s-1,(m-1)*(s-1),b*k1*s-b*k1-m*s+m,b*k1*s-1)
   totalSS=t(y)%*%y-y...^2/(b*k1*s)
   ss=c(blockSS,mpSS,blockmpSS,spSS,mpspSS,resSS,totalSS)
   ms=ss/df
@@ -336,7 +336,7 @@ aov.ispd.imis = function(obs, block, mp, sp, y)
   R=diag(r)
   y.M._curl=y.M.[1:(m-1)]
   mpSS=t(y.M._curl-N1_curl%*%yB../k1)%*%solve(R[1:(m-1),1:(m-1)]-N1_curl%*%t(N1_curl)/k1)%*%(y.M._curl-N1_curl%*%yB../k1)/k2
-  blockmpSS=t(yBM.)%*%yBM./k2-y...^2/(b*k1*s)-blockSS-mpSS
+  blockmpSS=t(yBM.)%*%yBM./k2-y...^2/(b*k1*k2)-blockSS-mpSS
   y..S=t(x4)%*%y
   y..S_curl=y..S[1:(s-1)]
   N4=t(x4)%*%x3
@@ -353,15 +353,15 @@ aov.ispd.imis = function(obs, block, mp, sp, y)
   C_MS=t*diag(m*(s-1)) - N6_curl%*%t(N6_curl)/k2
   mpspSS=t(Q_MS)%*%solve(C_MS)%*%Q_MS - spSS
   resSS=t(y)%*%y-t(yBM.)%*%yBM./k2-mpspSS-spSS
-  mpspF=(mpspSS/((m-1)*(s-1)))/(resSS/(b*k1*k2-b*m-m*s+m))
-  p.value.mpsp=pf(mpspF, df1=(m-1)*(s-1), df2=b*k1*k2-b*m-m*s+m, ncp=0, lower.tail = FALSE)
-  spF=(spSS/(s-1))/(resSS/(b*k1*k2-b*m-m*s+m))
-  p.value.sp=pf(spF, df1=(s-1), df2=b*k1*k2-b*m-m*s+m, ncp=0, lower.tail = FALSE)
+  mpspF=(mpspSS/((m-1)*(s-1)))/(resSS/(b*k1*k2-b*k1-m*s+m))
+  p.value.mpsp=pf(mpspF, df1=(m-1)*(s-1), df2=b*k1*k2-b*k1-m*s+m, ncp=0, lower.tail = FALSE)
+  spF=(spSS/(s-1))/(resSS/(b*k1*k2-b*k1-m*s+m))
+  p.value.sp=pf(spF, df1=(s-1), df2=b*k1*k2-b*k1-m*s+m, ncp=0, lower.tail = FALSE)
   mpF=(mpSS/(m-1))/(blockmpSS/(b*k1-b-m+1))
   p.value.mp=pf(mpF, df1=(m-1), df2=(b*k1-b-m+1), ncp=0, lower.tail = FALSE)
   blockF=(blockSS/(b-1))/(blockmpSS/(b*k1-b-m+1))
   p.value.block=pf(blockF, df1=(b-1), df2=(b*k1-b-m+1), ncp=0, lower.tail = FALSE)
-  df=c(b-1,m-1,(b*k1-b-m+1),s-1,(m-1)*(s-1),b*k1*k2-b*m-m*s+m,b*k1*k2-1)
+  df=c(b-1,m-1,(b*k1-b-m+1),s-1,(m-1)*(s-1),b*k1*k2-b*k1-m*s+m,b*k1*k2-1)
   totalSS=t(y)%*%y-y...^2/(b*k1*k2)
   ss=c(blockSS,mpSS,blockmpSS,spSS,mpspSS,resSS,totalSS)
   ms=ss/df
